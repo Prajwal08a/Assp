@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="myangularapp">
+
+<head>
+    <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    
+</head>
+
+<body ng-controller="my_controller">
+
+    <h2>Login</h2>
+
+    <form>
+        <label for="username">Username:</label>
+        <input type="text" ng-model="user.username" required>
+
+        <br>
+
+        <label for="password">Password:</label>
+        <input type="password" ng-model="user.password" required>
+
+        <br>
+
+        <button ng-click="login()">Login</button>
+    </form>
+
+    <script>
+        var app = angular.module('myangularapp', []);
+
+        app.controller('my_controller', function ($scope) {
+            $scope.user = {
+                username: '',
+                password: ''
+            };
+
+            var validUsers = ['user1', 'user2', 'user3'];
+            var validPasswords = ['pass1', 'pass2', 'pass3'];
+            var loginAttempts = 0;
+
+            $scope.login = function () {
+                var enteredUsername = $scope.user.username;
+                var enteredPassword = $scope.user.password;
+
+                // Check if the entered credentials are valid
+                if (validUsers.indexOf(enteredUsername) !== -1 &&
+                    validPasswords.indexOf(enteredPassword) !== -1) {
+                    // Successful login
+                    alert('Login successful');
+                } else {
+                    // Increment login attempts
+                    loginAttempts++;
+
+                    // Check if the user is blocked
+                    if (loginAttempts >= 3) {
+                        alert('User is blocked');
+                    } else {
+                        alert('Invalid credentials. Attempts remaining: ' + (3 - loginAttempts));
+                    }
+                }
+            };
+        });
+    </script>
+
+</body>
+
+</html>
